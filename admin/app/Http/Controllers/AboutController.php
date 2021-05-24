@@ -31,14 +31,16 @@ class AboutController extends Controller
         $title=$request->input('title');
         $detail=$request->input('detail');
 
-        $image=$request->file('img')->store('public/uploads/about');
+        $image=$request->file('img')->store('public');
 
-        $imgName=explode("/",$image)[3];
+        $imgName=explode("/",$image)[1];
+
+        $PhotoURL="http://".$_SERVER['HTTP_HOST']."/storage/".$imgName;
 
         $result=AboutModel::where('about_id', $about_id)->update([
             'title'=>$title,
             'detail'=>$detail,
-            'img'=>$imgName
+            'img'=>$PhotoURL
         ]);
         return $result;
     }

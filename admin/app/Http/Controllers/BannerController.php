@@ -1,25 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\BannerModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
 class BannerController extends Controller
 {
     public function banner(){
         $result=BannerModel::all();
         return $result;
     }
-
-    public function editBanner(Request $request){
-        $id=$request->id;
-        $result=DB::table('banner')->where('banner_id', $id)->get();
-        return $result;
-    }
-
 
     public function updateBanner(Request $request){
         $banner_id=$request->input('banner_id');
@@ -40,15 +30,17 @@ class BannerController extends Controller
         $title=$request->input('title');
         $subtitle=$request->input('subtitle');
 
-        $image=$request->file('img')->store('public/uploads/banner');
+        $image=$request->file('img')->store('public');
 
-        $imgName=explode("/",$image)[3];
+        $imgName=explode("/",$image)[1];
+        $PhotoURL="http://".$_SERVER['HTTP_HOST']."/storage/".$imgName;
 
         $result=BannerModel::where('banner_id', $banner_id)->update([
             'title'=>$title,
             'subtitle'=>$subtitle,
-            'img'=>$imgName
+            'img'=>$PhotoURL
         ]);
         return $result;
     }
+
 }

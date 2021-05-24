@@ -7,6 +7,7 @@ import DashboardPage from "../pages/DashboardPage";
 import AboutUsPage from "../pages/AboutUsPage";
 import Banner from "../components/Banner/Banner";
 import BannerPage from "../pages/BannerPage";
+import ServicePage from "../pages/ServicePage";
 class AppRoute extends Component {
     render() {
         return (
@@ -19,6 +20,9 @@ class AppRoute extends Component {
                 </Route>
                 <Route exact path="/banner">
                     <BannerPage/>
+                </Route>
+                <Route exact path="/service">
+                    <ServicePage/>
                 </Route>
             </Switch>
         );

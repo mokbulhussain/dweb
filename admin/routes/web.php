@@ -27,6 +27,16 @@ Route::get('/getAbout',[\App\Http\Controllers\AboutController::class,'about']);
 Route::post('/updateAbout',[\App\Http\Controllers\AboutController::class,'updateAbout']);
 Route::post('/updateAboutWithImg',[\App\Http\Controllers\AboutController::class,'updateAboutWithImg']);
 
+//Banner
+Route::get('/getBanner',[\App\Http\Controllers\BannerController::class,'banner']);
+Route::post('/updateBanner',[\App\Http\Controllers\BannerController::class,'updateBanner']);
+Route::post('/updateBannerWithImg',[\App\Http\Controllers\BannerController::class,'updateBannerWithImg']);
+
+
+//Service
+Route::get('/getService',[\App\Http\Controllers\ServiceController::class,'service']);
+Route::post('/addService',[\App\Http\Controllers\ServiceController::class,'addService']);
+
 
 Route::get('{AnyRoute}',function(){
     return view('home');

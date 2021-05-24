@@ -16,7 +16,6 @@ class AboutUs extends Component {
             title:'',
             detail:'',
             img:'',
-            imageUrl:'',
             imgvalue:false,
         }
         this.title=this.title.bind(this);
@@ -35,6 +34,7 @@ class AboutUs extends Component {
                 cthis.setState({title:cthis.state.datalist[0].title});
                 cthis.setState({detail:cthis.state.datalist[0].detail});
                 cthis.setState({img:cthis.state.datalist[0].img});
+                console.log(cthis.state.datalist)
             })
             .catch(function(error){
                 console.log(error);
@@ -91,8 +91,6 @@ class AboutUs extends Component {
             data.append('detail', detail);
             data.append('img', img);
 
-
-
             let config = {
                 headers: { 'content-type': 'multipart/form-data' }
             };
@@ -148,7 +146,7 @@ class AboutUs extends Component {
 
     render() {
 
-            let imgValue=`storage/uploads/about/${this.state.img}`;
+            let imgValue=this.state.img;
 
 
 
