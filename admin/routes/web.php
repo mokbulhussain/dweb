@@ -36,6 +36,32 @@ Route::post('/updateBannerWithImg',[\App\Http\Controllers\BannerController::clas
 //Service
 Route::get('/getService',[\App\Http\Controllers\ServiceController::class,'service']);
 Route::post('/addService',[\App\Http\Controllers\ServiceController::class,'addService']);
+Route::post('/editService',[\App\Http\Controllers\ServiceController::class,'editService']);
+Route::post('/updateServiceWithImg',[\App\Http\Controllers\ServiceController::class,'updateServiceWithImg']);
+Route::post('/updateService',[\App\Http\Controllers\ServiceController::class,'updateService']);
+Route::post('/deleteService',[\App\Http\Controllers\ServiceController::class,'deleteService']);
+
+
+// About
+Route::get('/getServiceDetail',[\App\Http\Controllers\ServiceDetailController::class,'serviceDetail']);
+Route::post('/updateServiceDetail',[\App\Http\Controllers\ServiceDetailController::class,'updateServiceDetail']);
+Route::post('/updateServiceDetailWithImg',[\App\Http\Controllers\ServiceDetailController::class,'updateServiceDetailWithImg']);
+
+
+
+//Service
+Route::get('/getCourse',[\App\Http\Controllers\CourseController::class,'course']);
+Route::post('/addCourse',[\App\Http\Controllers\CourseController::class,'addCourse']);
+Route::post('/editCourse',[\App\Http\Controllers\CourseController::class,'editCourse']);
+Route::post('/updateCourseWithImg',[\App\Http\Controllers\CourseController::class,'updateCourseWithImg']);
+Route::post('/updateCourse',[\App\Http\Controllers\CourseController::class,'updateCourse']);
+Route::post('/deleteCourse',[\App\Http\Controllers\CourseController::class,'deleteCourse']);
+
+
+
+//Service
+Route::get('/getBlogCat',[\App\Http\Controllers\blogCatController::class,'blogCat']);
+
 
 
 Route::get('{AnyRoute}',function(){

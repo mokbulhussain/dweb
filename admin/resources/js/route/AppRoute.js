@@ -8,6 +8,9 @@ import AboutUsPage from "../pages/AboutUsPage";
 import Banner from "../components/Banner/Banner";
 import BannerPage from "../pages/BannerPage";
 import ServicePage from "../pages/ServicePage";
+import ServiceDetailPage from "../pages/ServiceDetailPage";
+import CoursePage from "../pages/CoursePage";
+import BlogCatPage from "../pages/BlogCatPage";
 class AppRoute extends Component {
     render() {
         return (
@@ -23,6 +26,15 @@ class AppRoute extends Component {
                 </Route>
                 <Route exact path="/service">
                     <ServicePage/>
+                </Route>
+                <Route exact path="/serviceDetail">
+                    <ServiceDetailPage/>
+                </Route>
+                <Route exact path="/course">
+                    <CoursePage/>
+                </Route>
+                <Route exact path="/blogCat">
+                    <BlogCatPage/>
                 </Route>
             </Switch>
         );

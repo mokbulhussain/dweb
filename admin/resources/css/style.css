@@ -1,6 +1,9 @@
 body{
     background: #f1f1f1 !important;
 }
+.btn{
+    padding: -1.625rem -1.25rem !important;
+}
 .sidebar{
     width: 250px;
     background: #262638;

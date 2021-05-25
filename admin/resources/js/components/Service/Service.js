@@ -12,6 +12,7 @@ class Service extends Component {
         super();
         this.state={
             datalist:[],
+            editDatalist:[],
             rowid:'',
             detail:'',
             title:'',
@@ -23,7 +24,9 @@ class Service extends Component {
         this.handleShow=this.handleShow.bind(this);
         this.handleClose=this.handleClose.bind(this);
         this.handleForm=this.handleForm.bind(this);
+        this.EdithandleForm=this.EdithandleForm.bind(this);
         this.editModal=this.editModal.bind(this);
+        this.delete=this.delete.bind(this);
         this.EdithandleClose=this.EdithandleClose.bind(this);
         this.detail=this.detail.bind(this);
         this.title=this.title.bind(this);
@@ -49,10 +52,26 @@ class Service extends Component {
 
     handleClose(){
         this.setState({show:false});
+
     }
 
     editModal(){
-        this.setState({editModal:true})
+        if(this.state.rowid){
+            let ethis=this;
+            Axios.post('/editService', {
+                id: this.state.rowid
+            })
+                .then(function(response){
+                    if(response.status==200){
+                        ethis.setState({editDatalist:response.data});
+                        ethis.setState({title:ethis.state.editDatalist[0].title})
+                        ethis.setState({detail:ethis.state.editDatalist[0].detail})
+                        ethis.setState({editModal:true})
+                    }
+                })
+
+        }
+
     }
 
     EdithandleClose(){
@@ -112,6 +131,88 @@ class Service extends Component {
     }
 
 
+    EdithandleForm(){
+        event.preventDefault();
+
+        if(this.state.imgValue==true){
+
+            let url='/updateServiceWithImg';
+
+            let data=new FormData();
+            data.append('id',this.state.rowid);
+            data.append('title',this.state.title);
+            data.append('detail',this.state.detail);
+            data.append('image',this.state.img);
+
+
+            let config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            };
+
+            let rthis=this;
+
+            Axios.post(url, data,config).then(function (response) {
+                if(response.data){
+                    rthis.componentDidMount();
+                    toast("Data Update Successfully");
+                    rthis.setState({editModal:false})
+                }
+            })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+
+        }
+
+        else {
+
+            let url = '/updateService';
+
+            let data = new FormData();
+            data.append('id', this.state.rowid);
+            data.append('title', this.state.title);
+            data.append('detail', this.state.detail);
+
+
+            let config = {
+                headers: {'content-type': 'multipart/form-data'}
+            };
+
+            let rthis = this;
+
+            Axios.post(url, data, config).then(function (response) {
+                if (response.data) {
+                    rthis.componentDidMount();
+                    toast("Data Update Successfully");
+                    rthis.setState({editModal: false})
+                }
+            })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+    }
+
+    delete(){
+        if(this.state.rowid){
+            if(confirm("Do you want to delete")){
+                let ethis=this;
+                Axios.post('/deleteService', {
+                    id: this.state.rowid
+                })
+                    .then(function(response){
+                        if(response.status==200){
+                            ethis.componentDidMount();
+                            toast("Data Delete Successfully");
+                        }
+                    })
+            }
+        }
+    }
+
+
 
 
     render() {
@@ -120,6 +221,7 @@ class Service extends Component {
             mode: 'radio',
             onSelect: (row, isSelect, rowIndex) => {
                 this.setState({rowid:row['service_id']})
+                console.log(this.state.rowid);
             }
         };
 
@@ -163,8 +265,13 @@ class Service extends Component {
                                        Add
                                     </Button>
                                     <Button variant="primary" onClick={this.editModal}>
-                                        Update
+                                        Update / View
                                     </Button>
+
+                                    <Button variant="primary" className="m-1" onClick={this.delete}>
+                                        Delete
+                                    </Button>
+
                                     <BootstrapTable keyField='service_id' data={ data } columns={ columns } selectRow={ selectRow }>
                                     </BootstrapTable>
                                 </Card.Body>
@@ -213,24 +320,24 @@ class Service extends Component {
                 {/*Data Edit Model Start*/}
                 <Modal show={this.state.editModal} onHide={this.EdithandleClose} size="lg">
                     <Modal.Header closeButton>
-                        <Modal.Title><Icofont icon="list"/><span className="ml-2">Edit Service</span></Modal.Title>
+                        <Modal.Title><Icofont icon="list"/><span className="ml-2">Edit / View Service</span></Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form onSubmit={this.handleForm}>
+                        <Form onSubmit={this.EdithandleForm}>
 
 
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label>Title</Form.Label>
                                 <Form.Control type="text" defaultValue={this.state.title} onChange={this.title} required />
                             </Form.Group>
-                            <ReactQuill  onChange={this.detail} required/>
+                            <ReactQuill value={this.state.detail} onChange={this.detail} required/>
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Label>Image</Form.Label>
-                                <Form.Control type="file" onChange={this.files}  required/>
+                                <Form.Control type="file" onChange={this.files} />
                             </Form.Group>
 
                             <Button variant="primary" type="submit" className={"mt-3"}>
-                                Add
+                                Update
                             </Button>
                         </Form>
                     </Modal.Body>
