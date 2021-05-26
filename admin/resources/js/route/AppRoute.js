@@ -11,6 +11,7 @@ import ServicePage from "../pages/ServicePage";
 import ServiceDetailPage from "../pages/ServiceDetailPage";
 import CoursePage from "../pages/CoursePage";
 import BlogCatPage from "../pages/BlogCatPage";
+import BlogPage from "../pages/BlogPage";
 class AppRoute extends Component {
     render() {
         return (
@@ -35,6 +36,9 @@ class AppRoute extends Component {
                 </Route>
                 <Route exact path="/blogCat">
                     <BlogCatPage/>
+                </Route>
+                <Route exact path="/blog">
+                    <BlogPage/>
                 </Route>
             </Switch>
         );

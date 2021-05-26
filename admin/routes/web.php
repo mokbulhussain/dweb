@@ -61,6 +61,16 @@ Route::post('/deleteCourse',[\App\Http\Controllers\CourseController::class,'dele
 
 //Service
 Route::get('/getBlogCat',[\App\Http\Controllers\blogCatController::class,'blogCat']);
+Route::post('/addBlogCategory',[\App\Http\Controllers\blogCatController::class,'addBlogCat']);
+Route::post('/editBlogCat',[\App\Http\Controllers\blogCatController::class,'editBlogCat']);
+Route::post('/updateBlogCat',[\App\Http\Controllers\blogCatController::class,'updateBlogCat']);
+Route::post('/deleteBlogCat',[\App\Http\Controllers\blogCatController::class,'deleteBlogCat']);
+
+
+
+//Blog
+Route::get('/getBlog',[\App\Http\Controllers\BlogController::class,'getBlog']);
+Route::post('addBlog',[\App\Http\Controllers\BlogController::class,'addBlog']);
 
 
 

@@ -19,6 +19,7 @@ class Sidebar extends Component {
                         <NavLink exact to="/serviceDetail"><Icofont icon="package"/> Service Detail</NavLink>
                         <NavLink exact to="/course"><Icofont icon="package"/> Course</NavLink>
                         <NavLink exact to="/blogCat"><Icofont icon="package"/> Blog Category</NavLink>
+                        <NavLink exact to="/blog"><Icofont icon="package"/> Blog </NavLink>
                     </Nav>
                 </div>
             </Fragment>
