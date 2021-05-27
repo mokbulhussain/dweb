@@ -28,6 +28,10 @@ class Blog extends Component {
         this.title=this.title.bind(this);
         this.files=this.files.bind(this);
         this.blogCat=this.blogCat.bind(this);
+        this.editModal=this.editModal.bind(this);
+        this.EdithandleClose=this.EdithandleClose.bind(this);
+        this.EdithandleForm=this.EdithandleForm.bind(this);
+        this.delete=this.delete.bind(this);
     }
 
 
@@ -76,6 +80,7 @@ class Blog extends Component {
         this.setState({imgvalue:true})
         let image=event.target.files[0];
         this.setState({img:image})
+        console.log("change");
     }
 
     detail(event){
@@ -123,6 +128,125 @@ class Blog extends Component {
 
 
     }
+
+
+
+
+    // Edit Course
+
+    editModal(){
+        if(this.state.rowid){
+            let ethis=this;
+            Axios.post('/editBlog', {
+                id: this.state.rowid
+            })
+                .then(function(response){
+                    if(response.status==200){
+                        ethis.setState({editDatalist:response.data});
+                        ethis.setState({title:ethis.state.editDatalist[0].blog_title})
+                        ethis.setState({detail:ethis.state.editDatalist[0].detail})
+                        ethis.setState({blogCatId:ethis.state.editDatalist[0].blog_cat_id})
+                        ethis.setState({img:ethis.state.editDatalist[0].img})
+                        ethis.setState({editModal:true})
+                    }
+                })
+
+        }
+
+    }
+
+    EdithandleClose(){
+        this.setState({editModal:false})
+    }
+
+
+
+    EdithandleForm(){
+
+        event.preventDefault();
+
+        if(this.state.imgValue==true){
+
+            let url='/updateBlogWithImg';
+
+            let data=new FormData();
+            data.append('id', this.state.rowid);
+            data.append('blogCatId', this.state.blogCatId);
+            data.append('title',this.state.title);
+            data.append('detail',this.state.detail);
+            data.append('image',this.state.img);
+
+
+            let config = {
+                headers: { 'content-type': 'multipart/form-data' }
+            };
+
+            let rthis=this;
+
+            Axios.post(url, data,config).then(function (response) {
+                if(response.data){
+                    rthis.componentDidMount();
+                    toast("Data Update Successfully");
+                    rthis.setState({editModal:false})
+                }
+            })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+
+        }
+
+        else {
+
+            let url = '/updateBlog';
+
+            let data = new FormData();
+            data.append('id', this.state.rowid);
+            data.append('blogCatId', this.state.blogCatId);
+            data.append('title', this.state.title);
+            data.append('detail', this.state.detail);
+
+
+            let config = {
+                headers: {'content-type': 'multipart/form-data'}
+            };
+
+            let rthis = this;
+
+            Axios.post(url, data, config).then(function (response) {
+                if (response.data) {
+                    rthis.componentDidMount();
+                    toast("Data Update Successfully");
+                    rthis.setState({editModal: false})
+                }
+            })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+    }
+
+
+    delete(){
+        if(this.state.rowid){
+            if(confirm("Do you want to delete")){
+                let ethis=this;
+                Axios.post('/deleteBlog', {
+                    id: this.state.rowid
+                })
+                    .then(function(response){
+                        if(response.status==200){
+                            ethis.componentDidMount();
+                            toast("Data Delete Successfully");
+                        }
+                    })
+            }
+        }
+    }
+
+
 
 
 
@@ -257,6 +381,69 @@ class Blog extends Component {
                     </Modal.Footer>
                 </Modal>
                 {/*Data Add Model End*/}
+
+
+                {/*Data Edit Model Start*/}
+                <Modal show={this.state.editModal} onHide={this.EdithandleClose} size="lg">
+                    <Modal.Header closeButton>
+                        <Modal.Title><Icofont icon="list"/><span className="ml-2">Edit / View Service</span></Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form onSubmit={this.EdithandleForm}>
+
+
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Label>Title</Form.Label>
+                                <Form.Control type="text" defaultValue={this.state.title} onChange={this.title} required />
+                            </Form.Group>
+
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Label>Detail</Form.Label>
+                                <ReactQuill value={this.state.detail}  onChange={this.detail} required/>
+                            </Form.Group>
+
+
+
+                            <Form.Group controlId="formBasicEmail">
+
+                                <Form.Label>Blog Category</Form.Label>
+
+                                <Form.Control defaultValue={this.state.blogCatId} as="select"  onChange={this.blogCat}>
+                                    <option>Select Blog Cat</option>
+
+                                    {
+                                        this.state.categoryList.map((d)=>
+
+                                        <option value={d.blog_cat_id} selected={this.state.blogCatId == d.blog_cat_id}>{d.title}</option>
+
+
+                                        )
+                                    }
+
+                                </Form.Control>
+
+
+                            </Form.Group>
+
+                            <Form.Group controlId="formBasicPassword">
+                                <Form.Label>Image</Form.Label>
+                                <Form.Control type="file" onChange={this.files} />
+                            </Form.Group>
+
+                            <Button variant="primary" type="submit" className={"mt-3"}>
+                                Update
+                            </Button>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.EdithandleClose}>
+                            Close
+                        </Button>
+
+                    </Modal.Footer>
+                </Modal>
+                {/*Data Add Model End*/}
+
 
             </Fragment>
         );

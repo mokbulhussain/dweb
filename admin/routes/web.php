@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes(['register' => false]);
+Auth::routes(['register' => true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout',[App\Http\Controllers\HomeController::class,'logout'])->name('logout');
@@ -70,8 +70,25 @@ Route::post('/deleteBlogCat',[\App\Http\Controllers\blogCatController::class,'de
 
 //Blog
 Route::get('/getBlog',[\App\Http\Controllers\BlogController::class,'getBlog']);
-Route::post('addBlog',[\App\Http\Controllers\BlogController::class,'addBlog']);
+Route::post('/addBlog',[\App\Http\Controllers\BlogController::class,'addBlog']);
+Route::post('/editBlog',[\App\Http\Controllers\BlogController::class,'editBlog']);
+Route::post('/updateBlog',[\App\Http\Controllers\BlogController::class,'updateBlog']);
+Route::post('/updateBlogWithImg',[\App\Http\Controllers\BlogController::class,'updateBlogWithImg']);
+Route::post('/deleteBlog',[\App\Http\Controllers\BlogController::class,'deleteBlog']);
 
+
+
+//project Cat
+Route::get('/getProjectCat',[\App\Http\Controllers\ProjectCatController::class,'cat']);
+Route::post('/editProjectCat',[\App\Http\Controllers\ProjectCatController::class,'editCat']);
+Route::post('/updateProjectCat',[\App\Http\Controllers\ProjectCatController::class,'updateProjectCat']);
+Route::post('/projectCatDelete',[\App\Http\Controllers\ProjectCatController::class,'projectCatDelete']);
+Route::post('/addProjectCat',[\App\Http\Controllers\ProjectCatController::class,'addProjectCat']);
+
+
+
+//Info
+Route::get('/getInfo',[\App\Http\Controllers\InfoController::class,'getInfo']);
 
 
 Route::get('{AnyRoute}',function(){
