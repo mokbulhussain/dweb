@@ -86,9 +86,21 @@ Route::post('/projectCatDelete',[\App\Http\Controllers\ProjectCatController::cla
 Route::post('/addProjectCat',[\App\Http\Controllers\ProjectCatController::class,'addProjectCat']);
 
 
+//project Cat
+Route::get('/getProject',[\App\Http\Controllers\ProjectController::class,'project']);
+Route::post('/addProject',[\App\Http\Controllers\ProjectController::class,'addProject']);
+
+
 
 //Info
 Route::get('/getInfo',[\App\Http\Controllers\InfoController::class,'getInfo']);
+
+
+//Info
+Route::get('/getStartProject',[\App\Http\Controllers\StartProjectController::class,'startProject']);
+
+//contact
+Route::get('/getContact',[\App\Http\Controllers\ContactController::class,'contact']);
 
 
 Route::get('{AnyRoute}',function(){

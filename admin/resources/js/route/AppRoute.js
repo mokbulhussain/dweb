@@ -14,6 +14,7 @@ import BlogCatPage from "../pages/BlogCatPage";
 import BlogPage from "../pages/BlogPage";
 import InfoPage from "../pages/InfoPage";
 import ProjectCatPage from "../pages/ProjectCatPage";
+import ProjectPage from "../pages/ProjectPage";
 class AppRoute extends Component {
     render() {
         return (
@@ -47,6 +48,9 @@ class AppRoute extends Component {
                 </Route>
                 <Route exact path="/projectCat">
                     <ProjectCatPage/>
+                </Route>
+                <Route exact path="/project">
+                    <ProjectPage/>
                 </Route>
             </Switch>
         );
